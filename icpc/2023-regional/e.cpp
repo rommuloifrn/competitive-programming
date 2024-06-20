@@ -17,7 +17,7 @@ int main() {
 
     std::cin >> flowersQuantity >> gertrudePosition;
 
-    for (long long i=0; i<flowersQuantity; i++) {
+    for (long long i=0; i<flowersQuantity; i++) { // insere as flores no array
         long long flower;
         std::cin >> flower;
         flowers.push_back(flower);
@@ -27,7 +27,7 @@ int main() {
     // std::pop_heap(flowers.begin(), flowers.end());
     // flowers.pop_back();
 
-    for (long long i=1; i<=gertrudePosition; i++) {
+    for (long long i=1; i<=gertrudePosition; i++) { // percorre as posições da fila da primeira até a de gertrude
         std::pop_heap(flowers.begin(), flowers.end()); // move o maior elemento para o final
         
         long long pollenQuantityToCollect = get_sum_of_digits(flowers.back());
