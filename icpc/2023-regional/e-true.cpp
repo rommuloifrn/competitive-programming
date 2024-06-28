@@ -1,6 +1,4 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
 
 typedef long long ll;
 
@@ -18,14 +16,30 @@ void clearArray(long long arr[], long long size) {
         arr[i] = 0;
 }
 
+void printArray(long long arr[], long long size) {
+    std::cout << "[ ";
+    for (ll i=0; i<size-1; i++)
+        std::cout << arr[i] << ", " ;
+    std::cout << arr[size-1] << " ]\n";
+}
+
+void printBirdBox(long long arr[], long long size, ll i) {
+    std::cout << "[ ";
+    for (ll i=size-1; i>=0; i--)
+        if (arr[i] > 0)
+            for (ll k = arr[i]; k>0; k--)
+                std::cout << i << ", " ;
+        
+    std::cout << arr[size-1] << " ], " << "i = " << i << "\n";
+}
+
 int main() {
-    long long flowersQuantity, gertrudePosition;
-    long long flowersQtd = 1000000;
-    long long flowers[flowersQtd];
+    long long flowersQuantity, gertrudePosition, flowersMaxQtd = 1000000, bees = 0;
+    long long flowers[flowersMaxQtd];
 
     std::cin >> flowersQuantity >> gertrudePosition;
 
-    clearArray(flowers, flowersQtd);
+    clearArray(flowers, flowersMaxQtd);
 
     for (long long i=0; i<flowersQuantity; i++) { // insere as flores no array
         long long flower;
@@ -33,13 +47,19 @@ int main() {
         flowers[flower]++;
     }
 
-    for (long long i=flowersQtd-1; i>=0; i++) {
+    for (long long i=flowersMaxQtd-1; i>=0; i--) {
+        //if (i<40)
+        //    printBirdBox(flowers, 40, i);
+
         ll minus = get_sum_of_digits(i);
         ll result = i - minus;
-        if (i == gertrudePosition) { std::cout << minus; break; }
-        while (flowers[i] > 0) {
-            flowers[result]++;
-            flowers[i]--;
+
+        while (flowers[i] > 0) { //caso o pólen da flor atual seja maior que zero
+            flowers[result]++; // aumenta a quantidade de flores com o pólen restante
+            flowers[i]--; // diminui a quantidade de flores com o pólen da flor atual
+            bees++;
+            if (bees == gertrudePosition) { std::cout << minus <<"\n"; return 0; }
+            //std::cout << "sum of digits: " << minus << "i: " << i << "\n";
         }
     }
     
